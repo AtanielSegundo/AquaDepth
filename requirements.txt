@@ -2,3 +2,4 @@ tensorflow
 opencv-python
 numpy
 augmentor
+flask
