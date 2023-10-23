@@ -11,4 +11,6 @@ Este repositório contém os scripts e arquivos correspondentes à solução do 
 - **docs:** Contém documentações gerais do projeto.
 
 - **utils:** Contém scripts de utilidade geral e específica.
+- **inputs** Contém videos e imagens que serão usadas como inputs
+- **results** Contém o resultado das inferências feitas pelo modelo 
 
