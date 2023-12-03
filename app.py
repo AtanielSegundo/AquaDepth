@@ -12,11 +12,13 @@ class ApiInterface:
         
         if mode == "server":
             from api import server
+            self.debug = False
             self.api:Flask = \
             server(name=self.name,logger=self.logger)     
         
         elif mode == "dev":
             from api import dev
+            self.debug = True
             self.api:Flask = \
             dev(name=self.name,logger=self.logger)     
             
@@ -33,7 +35,7 @@ class ApiInterface:
                 self.logger.info(f"{key} : {item} | Set")
 
     def run(self):
-        self.api.run(self.host)
+        self.api.run(self.host,debug=self.debug)
 
 if __name__ == "__main__":
     import argparse

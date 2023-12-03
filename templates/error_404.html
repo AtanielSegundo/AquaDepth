@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Error 404 - Page Not Found!</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link href="{{ url_for('static', filename='images/favicon.png') }}" rel="shortcut icon" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="container">
+        <img class="ops" src="{{ url_for('static', filename='images/404.svg') }}" />
+        <br />
+        <br />
+        <a class="buton" href="{{ url_for('home') }}">Retornar Para A Página Raiz</a>
+    </div>
+</body>
+
+</html>
