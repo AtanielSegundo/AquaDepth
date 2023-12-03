@@ -24,7 +24,7 @@ def config_log(save_path:str,with_time=True):
     logger.setLevel(level=logging.INFO)
     logger.handlers = [file_handler, console_handler]
 
-def verify_path(path:str,mode:Literal["dir","file","url"]) -> bool:
+def verify_path(path:str,mode:Literal["dir","file","url"]="file") -> bool:
     if mode == "dir":
         from os.path import isdir
         return True if isdir(path) else False
@@ -34,4 +34,4 @@ def verify_path(path:str,mode:Literal["dir","file","url"]) -> bool:
         return True if exists(path) else False
     
     elif mode == "url":
-        ...
+        pass
