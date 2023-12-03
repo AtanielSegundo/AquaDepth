@@ -1,0 +1,2 @@
+[INFO] [2023_12_03_18_17_47] - Log Successfully Made At logs/tests.log
+[ERROR] [2023_12_03_18_17_47] - Cant Load dev.json | Error : [Errno 2] No such file or directory: 'configs/dev.json'

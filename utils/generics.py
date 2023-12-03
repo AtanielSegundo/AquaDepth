@@ -10,7 +10,7 @@ def config_log(save_path:str,with_time=True):
 
     if with_time:
         formatter = logging.Formatter(
-            "[%(levelname)s] [%(asctime)s] - %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+            "[%(levelname)s] [%(asctime)s] - %(message)s", datefmt="%Y_%m_%d_%H_%M_%S")
     else:
         formatter = logging.Formatter("%(message)s")
     
@@ -23,6 +23,8 @@ def config_log(save_path:str,with_time=True):
     logger = logging.getLogger(basename(save_path).split('.')[0])
     logger.setLevel(level=logging.INFO)
     logger.handlers = [file_handler, console_handler]
+
+    return logger
 
 def verify_path(path:str,mode:Literal["dir","file","url"]="file") -> bool:
     if mode == "dir":
