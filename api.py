@@ -30,7 +30,7 @@ def server(**args):
     
     @api.route("/")
     def home():
-        return "<head>On going</head>" 
+        return render_template("index.html")
 
     @api.errorhandler(404)
     def page_not_found(error):
@@ -70,8 +70,12 @@ def dev(**args):
 
         return logfile_str
     
+    @api.route("/")
+    def home():
+        return "<head>On going</head>" 
+
     @api.errorhandler(404)
     def page_not_found(error):
-        return jsonify({"error": "Página não encontrada"}), 404
+        return render_template("error_404.html")
     
     return api

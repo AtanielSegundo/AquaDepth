@@ -8,6 +8,54 @@ body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+.alternate_body {
+    background-color: #fffff0;
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.main_frame{
+    display: flex;
+    width: 100vw;
+    height: 90vh;
+    overflow: hidden;
+}
+
+.ship_frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60vw;
+    height: 100vh;
+    position: relative;
+}
+
+.log_frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40vw;
+    height: 100vh;
+    position: relative;
+    background-color: #111;
+}
+
+.ship_image {
+    width: 50%;
+    height:50%;
+    position: absolute;
+    top: 15%;
+    left: 35%;
+    transform: translateX(-50%);
+}
+.data_ship_frame{
+    background-color: #c7c7c7;
+    text-align: center;
+    width: 40vw;
+    height: 100vh;
+}
+
 .container {
     margin: 0 auto;
     text-align: center;
@@ -30,6 +78,48 @@ h3 {
     text-align: center;
     border-radius: 3px;
     text-decoration: none;
+}
+
+.blue-rectangle {
+    height: 10vh;
+    width: 100vw;
+    background-color: #1822a8;
+    color: #d4d4d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.change_button {
+    background-color: #1822a8;
+    color: #000;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    width: 10vw;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    background-image: url('../images/button.png');
+    background-size: cover; 
+    background-position: center; 
+    transform: scale(0.4);
+}
+
+.blue-rectangle p {
+    font-size: 32px; /* Adjust the font size as needed */
+    font-weight: bold;
+    margin: 0; /* Remove default margin for the paragraph */
+}
+
+.itaquiSign {
+    width: 10vw; /* 10% of the viewport width */
+    height: 15vh; /* 10% of the viewport height */
+    position: fixed;
+    bottom: 0;
+    left: 1vw;
 }
 
 a:hover {
