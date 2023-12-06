@@ -4,23 +4,29 @@ from logging import Logger
 
 class ApiInterface:
     def __init__(self,logger:Logger,mode:Literal["server","dev"]="server",
-                host:str=None,name:str="AquaDepth Api") -> None:
-        self.host   = host
+                host:str=None,port:int=5000,name:str="AquaDepth Api") -> None:
+        
         self.logger = logger
-        self.name   = name 
-        self._load_configs_(mode)
+        if host != None or name != "AquaDepth Api" or port != 5000:
+            self.host   = host
+            self.name   = name
+            self.port   = port  
+        else:
+            self._load_configs_(mode)
         
         if mode == "server":
             from api import server
             self.debug = False
             self.api:Flask = \
-            server(name=self.name,logger=self.logger)     
+            server(name=self.name,host=self.host,
+                   logger=self.logger,port=self.port)     
         
         elif mode == "dev":
             from api import dev
             self.debug = True
             self.api:Flask = \
-            dev(name=self.name,logger=self.logger)     
+            dev(name=self.name,host=self.host,
+                logger=self.logger,port=self.port)     
             
     def _load_configs_(self,mode:str):
         import json
@@ -35,7 +41,7 @@ class ApiInterface:
                 self.logger.info(f"{key} : {item} | Set")
 
     def run(self):
-        self.api.run(self.host,debug=self.debug)
+        self.api.run(self.host,debug=self.debug,port=self.port)
 
 if __name__ == "__main__":
     import argparse
@@ -44,12 +50,17 @@ if __name__ == "__main__":
              description='Aqua Depth Arguments',
              formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("--mode",nargs="?",default="server")
+    parser.add_argument("--host",nargs="?",default=None)
+    parser.add_argument("--name",nargs="?",default="AquaDepth Api")
+    parser.add_argument("--port",nargs="?",default=5000,type=int)
     parser.add_argument("--test",action="store_true",default=False)
     parser.add_argument("--logpath",type=str,default="logs/aqua.log")
     args = parser.parse_args()
+    
     log_path = args.logpath 
     mode = args.mode
     logger:Logger = ...
+    
     if verify_path(log_path):
         logger = config_log(save_path=log_path)
     else:
@@ -65,6 +76,6 @@ if __name__ == "__main__":
         logger.error(f"{mode} not available")
         exit()
     logger.info(f"Log Successfully Made At {log_path}")
-    api = ApiInterface(logger=logger,mode=mode)
-    
+    api = ApiInterface(logger=logger,mode=mode,name=args.name,host=args.host,port=args.port)
+
     api.run()

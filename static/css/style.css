@@ -33,22 +33,35 @@ body {
 
 .log_frame {
     display: flex;
+    flex-direction: column;
+    color: #FFF;
     align-items: center;
     justify-content: center;
+    overflow-y: visible scroll;
     width: 40vw;
-    height: 100vh;
     position: relative;
     background-color: #111;
 }
 
+.log_item{
+    color: #FFF;
+    background-color: #000;
+    width: 100%;
+    text-align: justify start;
+
+}
+
+
 .ship_image {
     width: 50%;
-    height:50%;
+    height: 50%;
     position: absolute;
     top: 15%;
     left: 35%;
     transform: translateX(-50%);
+    transition: transform 0.2s ease; 
 }
+
 .data_ship_frame{
     background-color: #c7c7c7;
     text-align: center;
@@ -106,6 +119,11 @@ h3 {
     background-size: cover; 
     background-position: center; 
     transform: scale(0.4);
+    transition: background-image 0.3s ease;
+}
+
+.change_button:hover {
+    background-image: url('../images/hover_button.png');
 }
 
 .blue-rectangle p {

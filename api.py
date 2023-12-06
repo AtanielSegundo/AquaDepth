@@ -1,8 +1,9 @@
 from flask import Flask,jsonify,render_template
 def server(**args):
-    name = args["name"]
     logger = args["logger"]
-
+    name = args["name"]
+    port = args["port"]
+    host = args["host"]
     api = Flask(name)
     
     @api.route("/log/json")
@@ -13,7 +14,7 @@ def server(**args):
             logfile_lines = logfile.readlines()
             count = 1
             for line in logfile_lines:
-                temp_dict["entry_"+str(count)] = line
+                temp_dict[count] = line.strip()
                 count+=1
         return temp_dict
     
@@ -30,6 +31,7 @@ def server(**args):
     
     @api.route("/")
     def home():
+        home_url = host+":"+str(port)
         return render_template("index.html")
 
     @api.errorhandler(404)
@@ -44,6 +46,7 @@ def server(**args):
 def dev(**args):
     name = args["name"]
     logger = args["logger"]
+    port = args["port"]
 
     api = Flask("dev_"+name)
     
