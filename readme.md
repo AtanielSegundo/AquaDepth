@@ -6,7 +6,7 @@ Este repositório contém os scripts e arquivos correspondentes à solução do 
 
 - **api:** Contém os scripts e assets necessários para a criação da REST API via Django.
 
-- **backbone:** Inclui scripts e modelos relacionados à solução de IA.
+- **core:** Inclui scripts e modelos relacionados à solução de IA.
 
 - **docs:** Contém documentações gerais do projeto.
 
