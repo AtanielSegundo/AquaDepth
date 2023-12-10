@@ -68,9 +68,7 @@ def treating_augment(dataset_path, temp_path):
 
 
 def image_treating(image_path:str) -> None:
-    from cv2 import imread,equalizeHist,GaussianBlur,imwrite,\
-                    split,merge,COLOR_BGR2RGB
-    
+    from cv2 import imread,equalizeHist,GaussianBlur,imwrite,split,merge,COLOR_BGR2RGB
     image = imread(image_path)
     channels = split(image)
     eq_channels = [equalizeHist(channel) for channel in channels]
@@ -91,9 +89,9 @@ def format_dataset(dataset:str,extension:str="jpg",writer:Callable[[str],None]=p
         if equalize_hist:
             image_treating(image_path)
         n = Image.open(image_path)
-        n.save(image_path.replace(old_ext,extension))
+        n.save(image_path.replace(old_ext,extension),optimize=True)
         if old_ext != extension:
-            remove(f"{dataset}/imgs/{image}")
+            remove(join(dataset,image))
     
     writer(f"all images formatted to {extension}")
     
@@ -106,3 +104,8 @@ def normalize(input_array, colors):
     closest_color_indices = np.argmin(distances, axis=1)
     normalized_array = colors[closest_color_indices].reshape(input_shape)
     return normalized_array
+
+if __name__ == "__main__":
+    augment_dataset("dataset",20,file_extension="png")
+
+

@@ -12,12 +12,13 @@ def v7_images_search(search_term:str,azure_key:str,count:int=150,offset:int=0) -
     
     return response.json()
 
-def filter_value_arr(filters:List[str],value_array:List[dict]) -> list:
+def filter_value_arr(filters:List[str],value_array:List[dict],valid_extensions=[".jpg",".png"]) -> list:
     in_filters = lambda string : any(map(lambda i:i in string,filters)) 
+    ext_filters = lambda string: any(ext in string.lower() for ext in valid_extensions)
     filtered_array = [] 
     for value in value_array:
         image_url = value["contentUrl"]
-        if not in_filters(image_url):
+        if not in_filters(image_url) and ext_filters(image_url):
             filtered_array.append(image_url)
     return filtered_array
 
@@ -41,14 +42,13 @@ def download_images(images_link: list, folder: str):
 
 if __name__ == "__main__":
     filters = ["bigstockphoto","alamy","istockphoto","dreamstime","shutterstock"
-               "blogspot"]
+               "blogspot","gif","jpe"]
     with open("key.txt","r") as k:
         key = k.readline().strip() 
     
-    search_term = "ship draft mark"
-    wanted_images = 100     
+    wanted_images = 200     
     count = 100
-    
+    search_term = "ship draft mark"
     filtered_image = []
     offset = None
     
