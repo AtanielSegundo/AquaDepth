@@ -2,3 +2,6 @@
 venv
 *.log
 __pycache__
+dataset
+key.txt
+dataset
