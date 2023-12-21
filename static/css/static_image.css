@@ -1,0 +1,109 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    font-family: Helvetica, Arial, sans-serif;
+    }
+
+.blue-rectangle {
+    height: 10vh;
+    width: 100vw;
+    background-color: #1822a8;
+    color: #d4d4d4;
+    display: flex;
+    position: relative;
+}
+
+.dropzone-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; 
+    background-color: white;
+}
+
+.dropzone {
+    border: 5px solid black;
+    padding: 20px;
+    width: 50vw;
+    height: 60vh;
+    background-image: url("../images/camera.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: white;
+    background-size: 50%; 
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+    justify-content: flex-end; 
+}
+.dropzone:hover {
+    border: 5px solid #e7dd57;
+    padding: 20px;
+    width: 50vw;
+    height: 60vh;
+    background-image: url("../images/camera.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #cbcabe;
+    background-size: 50%; 
+    filter: invert(1);
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+    justify-content: flex-end; 
+}
+.dropzone p {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: -30px; 
+}
+.dropzone:hover p{
+    color: #cbcabe;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: -30px; 
+}
+.blue-rectangle {
+    height: 10vh;
+    width: 100vw;
+    background-color: #1822a8;
+    color: #d4d4d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.blue-rectangle p {
+    font-size: 32px; /* Adjust the font size as needed */
+    font-weight: bold;
+    margin: 0; /* Remove default margin for the paragraph */
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 200px;
+    margin-top: 50px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #3498db; /* Blue color, you can change this */
+    color: #ffffff; /* White text color */
+    border-radius: 6px;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #297fb8; /* Darker shade on hover */
+}
