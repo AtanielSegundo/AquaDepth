@@ -8,29 +8,29 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
     <script>
         var HomeUrl = "{{home_url}}";
-    </script>
+        </script>
 </head>
 
 <body class="alternate_body">
-    <div class="blue-rectangle">
+
+<script src="{{ url_for('static', filename='scripts/functions.js') }}"></script>
+
+<div class="blue-rectangle">
         <p>AQUA DEPTH</p>
         <button class="change_button" onclick="change_frame()"></button>
+</div>
+
+<div class="main_frame">
+    <div class="ship_frame">
+        <img src="{{ url_for('static', filename='images/ship.png') }}" class="ship_image" />
     </div>
 
-    <div class="main_frame">
-    
-        <div class="ship_frame">
-            <img src="{{ url_for('static', filename='images/ship.png') }}" class="ship_image" />
-        </div>
-    
-        <div class="data_ship_frame" id="ShipFrame">
-            <p>AQUA DEPTH</p>
-   
-        </div>
-    
+    <div class="data_ship_frame" id="ShipFrame">
+        <p>AQUA DEPTH</p>
     </div>
+    
+</div>
 
-    <script src="{{ url_for('static', filename='scripts/functions.js') }}"></script>
 </body>
 
 <img src="{{ url_for('static', filename='images/porto_itaqui.png') }}" class="itaquiSign"/>

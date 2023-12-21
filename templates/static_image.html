@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Stream</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    {{ dropzone.load_css() }}
+    <style>
+       body {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+.blue-rectangle {
+    height: 10vh;
+    width: 100vw;
+    background-color: #1822a8;
+    color: #d4d4d4;
+    display: flex;
+    position: relative;
+}
+
+.dropzone-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh; 
+    background-color: white;
+}
+
+.dropzone {
+    border: 5px dashed black;
+    padding: 20px;
+    width: 60vw;
+    height: 60vh;
+    background-image: url("static/images/ship.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 35%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+}
+.dropzone p {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: -30px; 
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    width: 200px;
+    margin-top: 50px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #3498db; /* Blue color, you can change this */
+    color: #ffffff; /* White text color */
+    border-radius: 6px;
+    transition: background-color 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #297fb8; /* Darker shade on hover */
+}
+    </style>
+
+    <script>
+        var HomeUrl = "{{home_url}}";
+    </script>
+</head>
+
+<body>
+    <script src="{{ url_for('static', filename='scripts/functions.js') }}"></script>
+    <div class="blue-rectangle">
+        <p>AQUA DEPTH</p>
+    </div>
+    <div class="dropzone-container">
+        {{ dropzone.create(action="upload_file")}}
+        {{ dropzone.load_js()}}
+        {{ dropzone.config() }}
+        <button class="button">Processar imagens</button>
+    </div>
+
+
+</body>
+
+</html>

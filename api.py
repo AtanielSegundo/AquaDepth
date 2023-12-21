@@ -1,20 +1,34 @@
 from flask import Flask,jsonify,render_template,request
+from flask_dropzone import Dropzone
+from os.path import join
 def server(**args):
     logger = args["logger"]
     name = args["name"]
     port = args["port"]
     host = args["host"]
-    api = Flask(name)
     
-    @api.route('/static', methods=['POST'])
+    api = Flask(name)
+    api.config.update(
+    UPLOADED_PATH="data",
+    DROPZONE_MAX_FILE_SIZE = 60 ,
+    DROPZONE_TIMEOUT = 5*60*1000,    
+    DROPZONE_DEFAULT_MESSAGE = "<p>Arraste e solte imagens das marcas de calado do navio</p>")
+
+    dropzone = Dropzone(api)
+    
+    
+    @api.route('/upload', methods=['GET','POST'])
     def upload_file():
         if 'file' in request.files:
             file = request.files['file']
-            # Here you should save the file
-            # file.save(path_to_save_file)
-            return 'File uploaded successfully'
+            file.save(join(api.config['UPLOADED_PATH'],file.filename))
+        return "successful_upload"
 
-    return 'No file uploaded'
+    @api.route("/static")
+    def static_image():
+        return render_template("static_image.html")
+        
+
     @api.route("/log/json")
     def get_log_json():
         path = logger.__dict__["handlers"][0].baseFilename
