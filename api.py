@@ -1,4 +1,4 @@
-from flask import Flask,jsonify,render_template
+from flask import Flask,jsonify,render_template,request
 def server(**args):
     logger = args["logger"]
     name = args["name"]
@@ -6,6 +6,15 @@ def server(**args):
     host = args["host"]
     api = Flask(name)
     
+    @api.route('/static', methods=['POST'])
+    def upload_file():
+        if 'file' in request.files:
+            file = request.files['file']
+            # Here you should save the file
+            # file.save(path_to_save_file)
+            return 'File uploaded successfully'
+
+    return 'No file uploaded'
     @api.route("/log/json")
     def get_log_json():
         path = logger.__dict__["handlers"][0].baseFilename
