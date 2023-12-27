@@ -107,3 +107,11 @@ body {
 .button:hover {
     background-color: #297fb8; /* Darker shade on hover */
 }
+
+.ship_image {
+    width: 35%;
+    height: 40%;
+    top : 50%; 
+    left : 50%;
+    translate : -50% -50%
+}

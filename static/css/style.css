@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/* CSS Document */
+
 
 body {
     background-color: #222;
@@ -127,14 +127,14 @@ h3 {
 }
 
 .blue-rectangle p {
-    font-size: 32px; /* Adjust the font size as needed */
+    font-size: 32px; 
     font-weight: bold;
-    margin: 0; /* Remove default margin for the paragraph */
+    margin: 0; 
 }
 
 .itaquiSign {
-    width: 10vw; /* 10% of the viewport width */
-    height: 15vh; /* 10% of the viewport height */
+    width: 10vw; 
+    height: 15vh; 
     position: fixed;
     bottom: 0;
     left: 1vw;

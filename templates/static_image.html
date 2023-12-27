@@ -5,23 +5,20 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Stream</title>
     {{ dropzone.load_css() }}
-    <script>
-        var HomeUrl = "{{home_url}}";
-    </script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/static_image.css') }}" />
 </head>
 
 <body>
-    <script src="{{ url_for('static', filename='scripts/functions.js') }}"></script>
     <div class="blue-rectangle">
         <p>AQUA DEPTH</p>
     </div>
     <div class="dropzone-container">
         {{ dropzone.create(action="upload_file")}}
         {{ dropzone.load_js()}}
-        {{ dropzone.config() }}
-        <button class="button">Processar imagens</button>
+        {{dropzone.config()}}
+        <button class="button" onclick="startProcessing()" id="gbutton">Processar imagens</button>
     </div>
-
+    <script> var ship_image_path = "{{ url_for('static', filename='images/ship.png') }}" </script>
+    <script src="{{ url_for('static', filename='scripts/static.js') }}"></script>
 </body>
 </html>
