@@ -1,7 +1,7 @@
 function startProcessing() {
     hideOtherElements(); 
     rotateShip(); 
-    simulateImageProcessing()
+    ImagesProcessing()
         .then(() => {
             stopRotateShip();
             showOtherElements(); 
@@ -22,6 +22,12 @@ function hideOtherElements() {
             element.style.display = 'none';
         }
     }
+    const dz_images = document.getElementsByClassName("dz-preview dz-processing dz-success dz-complete dz-image-preview")
+    const dzImagesArray = Array.from(dz_images);
+    dzImagesArray.forEach(image => {
+    image.parentNode.removeChild(image);
+    })
+
 }
 
 
@@ -35,12 +41,23 @@ function showOtherElements() {
     }
 }
 
-function simulateImageProcessing() {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            console.log("Image processing complete");
-            resolve();
-        }, 5000);
+function ImagesProcessing() {
+    return new Promise((resolve, reject) => {
+        fetch(HomeUrl + "/process")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                console.log("Image processing complete", data);
+                resolve(data);
+            })
+            .catch(error => {
+                console.error("Error during image processing:", error);
+                reject(error);
+            });
     });
 }
 

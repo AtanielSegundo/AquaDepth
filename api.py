@@ -1,12 +1,55 @@
 from flask import Flask,jsonify,render_template,request
 from flask_dropzone import Dropzone
 from os.path import join
+from typing import Literal,List,Union,Callable,Tuple
+from logging import Logger
+from time import sleep 
+
+class ApiInterface:
+    def __init__(self,logger:Logger,mode:Literal["server","dev"]="server",
+                host:str=None,port:int=5000,name:str="AquaDepth Api") -> None:
+        
+        self.logger = logger
+        if host != None or name != "AquaDepth Api" or port != 5000:
+            self.host   = host
+            self.name   = name
+            self.port   = port  
+        else:
+            self._load_configs_(mode)
+        
+        if mode == "server":
+            self.debug = False
+            self.api:Flask = \
+            server(name=self.name,host=self.host,
+                   logger=self.logger,port=self.port)     
+        
+        elif mode == "dev":
+            self.debug = True
+            self.api:Flask = \
+            dev(name=self.name,host=self.host,
+                logger=self.logger,port=self.port)     
+            
+    def _load_configs_(self,mode:str):
+        import json
+        try:
+            with open(f"configs/{mode}.json") as jp:                
+                temp_dict:dict =  json.load(jp)
+        except Exception as e:
+            self.logger.error(f"Cant Load {mode}.json | Error : {e}")
+        else:
+            for key,item in temp_dict.items():
+                setattr(self,key,item)
+                self.logger.info(f"{key} : {item} | Set")
+
+    def run(self):
+        self.api.run(self.host,debug=self.debug,port=self.port)
+
 def server(**args):
     logger = args["logger"]
     name = args["name"]
     port = args["port"]
     host = args["host"]
-    
+    home_url = host+":"+str(port)
     api = Flask(name)
     api.config.update(
     UPLOADED_PATH="data",
@@ -28,7 +71,12 @@ def server(**args):
     def static_image():
         return render_template("static_image.html")
         
-
+    @api.route("/process")
+    def process():
+        for i in range(10):
+            sleep(1)
+        return {"ok" : "mec"}
+    
     @api.route("/log/json")
     def get_log_json():
         path = logger.__dict__["handlers"][0].baseFilename
@@ -54,7 +102,6 @@ def server(**args):
     
     @api.route("/")
     def home():
-        home_url = host+":"+str(port)
         return render_template("index.html")
 
     @api.errorhandler(404)
