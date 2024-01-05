@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+    <link rel="icon" href="{{url_for('static', filename='images/tab_icon.png')}}" sizes="192x192">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}"/>
+        <script>var HomeUrl = "{{home_url}}";</script>
+    </head>
+    <body>
+        
+        <div class="selection_bar">
+            
+            <button id = "imagens_btn" onclick="handleButtonClick(this.id)">
+                Imagens
+            </button>
+            
+            <button id = "apresentacao_btn" onclick="handleButtonClick(this.id)">
+                Apresentação
+            </button>
+            
+            <button id = "video_btn" onclick="handleButtonClick(this.id)">
+                Videos
+            </button>
+            
+        </div>
+        
+        <div class="container">
+            <section class="imagens">
+            </section>
+        
+            <section class="apresentacao">  
+            </section>
+            
+            <section class="video">
+            </section>
+            
+        </div>
+        
+    </body>
+    
+    <script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+    </html>

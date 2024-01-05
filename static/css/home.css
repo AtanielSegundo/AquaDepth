@@ -1,0 +1,81 @@
+* {
+    padding:0;
+    margin:0;
+  }
+  
+  body {
+    font-family: "Montserrat", sans-serif;
+    overflow: hidden;
+  }
+  
+  .selection_bar {
+    height: 4vh;
+    width: 100vw;
+    background-color: #36669d;
+    background-image: linear-gradient(350deg, #36669d 0%, #a3a3a3 80%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.selection_bar button {
+    font-family: Cambria;
+    font-size: 120%; 
+    color: black;
+    background: transparent;
+    font-weight: bolder;
+    flex : 1;
+    border: none;
+    transition: all 1s;
+}   
+  .container {
+    height:96vh;
+    display: flex;
+  }
+  
+  section {
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex:1;
+    transition: all 1s;
+  }
+    
+  section h1 {
+    background:rgba(0,0,0,0.6);
+    color:white;
+    padding: 12px 32px;
+  }
+  .imagens{
+    background:url('../images/itaqui_1.jpg');
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+  
+  .apresentacao{
+    background:url('../images/itaqui_2.jpg');
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  
+  .video{
+    background:url('../images/itaqui_3.jpg');
+    background-position: center;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  .logos{
+    max-width: 25%; 
+    max-height: 25vh; 
+    width: auto;
+    height: auto;
+    transition: all .3s;
+  }

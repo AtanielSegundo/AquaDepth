@@ -1,6 +1,7 @@
 from flask import Flask,jsonify,render_template,request
 from flask_dropzone import Dropzone
 from os.path import join
+from os import remove,listdir
 from typing import Literal,List,Union,Callable,Tuple
 from logging import Logger
 from time import sleep 
@@ -51,31 +52,47 @@ def server(**args):
     host = args["host"]
     home_url = host+":"+str(port)
     api = Flask(name)
+    api.__setattr__("images_list_to_process",{"new":[],"old":[]})
     api.config.update(
     UPLOADED_PATH="data",
     DROPZONE_MAX_FILE_SIZE = 60 ,
     DROPZONE_TIMEOUT = 5*60*1000,    
     DROPZONE_DEFAULT_MESSAGE = "<p>Arraste e solte imagens das marcas de calado do navio</p>")
-
+    
+    for file in listdir(folder:=api.config["UPLOADED_PATH"]):
+        remove(join(folder,file))
     dropzone = Dropzone(api)
-    
-    
+
     @api.route('/upload', methods=['GET','POST'])
     def upload_file():
         if 'file' in request.files:
             file = request.files['file']
+            api.images_list_to_process["new"].append(file.filename)
             file.save(join(api.config['UPLOADED_PATH'],file.filename))
         return "successful_upload"
 
     @api.route("/static")
     def static_image():
         return render_template("static_image.html")
-        
+    
+    @api.route("/test")
+    def test():
+        return render_template("home.html")
+
     @api.route("/process")
     def process():
         for i in range(10):
             sleep(1)
-        return {"ok" : "mec"}
+        for old_image in api.images_list_to_process["old"]:
+            try:
+                remove(join(api.config['UPLOADED_PATH'],old_image))
+                logger.info(old_image + "removed")
+            except Exception as e: 
+                logger.error(f"error {e} removing {old_image}")
+        response = {i:"OK" for i in api.images_list_to_process["new"]}
+        api.images_list_to_process["old"] = api.images_list_to_process["new"].copy()
+        api.images_list_to_process["new"] = []
+        return response
     
     @api.route("/log/json")
     def get_log_json():
