@@ -64,7 +64,9 @@ function handleHoverInversion(sectionName) {
         const innerImageElement = document.getElementById(innerImageId);
         if (innerImageElement) {
             const isInversed = !(tuple[0] === sectionName);
-            innerImageElement.style.filter = isInversed ? "none" : "invert(1)";
+            innerImageElement.style.filter = isInversed ? "invert(0.5)" : "none";
+            innerImageElement.style.maxHeight = isInversed ? "25vh" : "30vh";
+            innerImageElement.style.maxWidth = isInversed ? "25%" : "30%";
         }
     }
 

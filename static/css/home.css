@@ -78,4 +78,5 @@
     width: auto;
     height: auto;
     transition: all .3s;
+    filter: invert(0.5);
   }
