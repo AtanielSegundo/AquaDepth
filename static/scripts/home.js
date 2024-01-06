@@ -2,14 +2,20 @@ let selectionButtons = ["imagens_btn", "apresentacao_btn", "video_btn"];
 let selectionObjects = selectionButtons.map(string => document.getElementById(string));
 const getSectionName = string => string.split("_")[0];
 const getBtnName = string => string === "" ? "" : string+"_btn";
-const MatchList = [["imagens","camera_hover.png"],
-                   ["apresentacao","presentation_white.png"],
-                   ["video","video_white.png"]
+const MatchList = [["imagens","camera_hover.png","logo-imagens"],
+                   ["apresentacao","presentation_white.png","logos"],
+                   ["video","video_white.png","logos"]
                   ];
 
 
-function handleImagensSection() {
-    console.log("todo".toUpperCase())
+function handleImagensSection(show=true) {
+    const dropzone = document.getElementsByClassName("dropzone-container")[0];
+    if (show){
+        dropzone.style.visibility = "visible";
+    }
+    else{
+        dropzone.style.visibility = "hidden";
+    }
 }
 function handleApresentacaoSection() {
     console.log("todo".toUpperCase())
@@ -42,6 +48,7 @@ function handleSectionLogos(clickedId){
             methodsMap[sectionName]();
         }
         else{
+            methodsMap[tuple[0]](false);
             const innerImageId = tuple[0] + "_inner_image";
             const sectionObject = document.getElementsByClassName(tuple[0])[0];
             const innerImageElement = document.getElementById(innerImageId);
@@ -51,7 +58,7 @@ function handleSectionLogos(clickedId){
             const img = document.createElement('img');
             img.id  = innerImageId; 
             img.src = `static/images/` + tuple[1];
-            img.className = "logos";
+            img.className = tuple[2];
             sectionObject.appendChild(img);
         }
     }
@@ -74,8 +81,11 @@ function handleHoverInversion(sectionName) {
 
 for (const section of sectionsObjects) {
     const sectionName = section[0].className;
-    section[0].addEventListener('click', function () {
-        handleButtonClick(getBtnName(sectionName))     
+    section[0].addEventListener('click', function (event) {
+        const innerImage = document.getElementById(sectionName+"_inner_image");
+        if (event.target === section[0] || event.target === innerImage) {
+            handleButtonClick(getBtnName(sectionName));
+        }
     });
 
     section[0].addEventListener('mouseenter', function () {
@@ -84,9 +94,8 @@ for (const section of sectionsObjects) {
     section[0].addEventListener('mouseleave', function () {
         handleHoverInversion(getSectionName(sectionName));
     });
-
-
 }
+
 function handleButtonClick(clickedId) {
     const sectionName = getSectionName(clickedId);
     handleSectionLogos(clickedId);    
@@ -122,3 +131,134 @@ function handleButtonClick(clickedId) {
     }
     handleSectionLogos(lastBtn);
 }   
+
+
+
+
+function startProcessing() {
+    hideOtherElements(); 
+    rotateShip(); 
+    ImagesProcessing()
+        .then(() => {
+            stopRotateShip();
+            showOtherElements(); 
+        })
+        .catch((error) => {
+            console.error("Error during image processing:", error);
+            stopRotateShip(); 
+            showOtherElements(); 
+        });
+}
+
+
+function hideOtherElements() {
+    const allElements = document.body.children;
+    for (let i = 0; i < allElements.length; i++) {
+        const element = allElements[i];
+        if (element.tagName !== 'SCRIPT' && !element.classList.contains('blue-rectangle')) {
+            element.style.display = 'none';
+        }
+    }
+    const dz_images = document.getElementsByClassName("dz-preview dz-processing dz-success dz-complete dz-image-preview")
+    const dzImagesArray = Array.from(dz_images);
+    dzImagesArray.forEach(image => {
+    image.parentNode.removeChild(image);
+    })
+
+}
+
+
+function showOtherElements() {
+    const allElements = document.body.children;
+    for (let i = 0; i < allElements.length; i++) {
+        const element = allElements[i];
+        if (element.tagName !== 'SCRIPT' && !element.classList.contains('blue-rectangle')) {
+            element.style.display = ''; 
+        }
+    }
+}
+
+function ImagesProcessing() {
+    return new Promise((resolve, reject) => {
+        fetch(HomeUrl + "/process")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                console.log("Image processing complete", data);
+                resolve(data);
+            })
+            .catch(error => {
+                console.error("Error during image processing:", error);
+                reject(error);
+            });
+    });
+}
+
+let rotateShipInterval;
+function rotateShip() {
+    let dot_repeat = 1;
+    const loadingMessage = document.createElement('p');
+    loadingMessage.id = 'loading_message';
+    loadingMessage.style.position = 'fixed';
+    loadingMessage.textContent = 'Processando' + '.'.repeat(dot_repeat);
+    loadingMessage.style.top = '70%';  
+    loadingMessage.style.left = '50%';
+    loadingMessage.style.fontSize = '30px';
+    loadingMessage.style.transform = 'translateX(-50%)';
+    document.body.appendChild(loadingMessage);
+    
+    const shipImage = document.createElement('img');
+    shipImage.src = ship_image_path;
+    shipImage.className = 'ship_image';
+    document.body.appendChild(shipImage);
+    
+    let currentRotation = 0;    
+    let rotationDirection = 0.4;
+    let rotationLimit = 2;
+    let dampingFactor = 0.985;
+    let resetThreshold = 0.1;
+    
+    shipImage.style.position = "absolute"; 
+    shipImage.style.top = '50%'; 
+    shipImage.style.left = '50%'; 
+    
+    rotateShipInterval = setInterval(() => {
+        if (currentRotation >= rotationLimit || currentRotation <= -rotationLimit) {
+            rotationDirection *= -1;
+        }
+        
+        currentRotation += rotationDirection;
+        rotationDirection *= dampingFactor;
+        
+        if (Math.abs(rotationDirection) < resetThreshold) {
+            rotationDirection = 0.4;
+        }
+        
+        shipImage.style.transition = 'transform 0.3s ease';
+        shipImage.style.transform = `rotate(${currentRotation}deg)`;
+        
+    }, 60);
+    
+    setInterval(() => {
+        dot_repeat = (dot_repeat + 1) % 4;
+        loadingMessage.textContent = 'Processando' + '.'.repeat(dot_repeat);
+    }, 600);  
+    
+}
+
+function stopRotateShip() {
+    clearInterval(rotateShipInterval);
+    const shipImage = document.querySelector('.ship_image');
+    const loadingMessage = document.getElementById("loading_message");
+    if (shipImage && shipImage.parentNode) {
+        shipImage.parentNode.removeChild(shipImage);
+    }
+
+    if (loadingMessage && loadingMessage.parentNode) {
+        loadingMessage.parentNode.removeChild(loadingMessage);
+    }
+}

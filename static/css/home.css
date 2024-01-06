@@ -39,7 +39,7 @@
     align-items: center;
     justify-content: center;
     flex:1;
-    transition: all 1s;
+    transition: all 1s ;
   }
     
   section h1 {
@@ -47,12 +47,14 @@
     color:white;
     padding: 12px 32px;
   }
-  .imagens{
-    background:url('../images/itaqui_1.jpg');
+  .imagens {
+    background: url('../images/itaqui_1.jpg');
     background-position: center;
     background-size: cover;
     background-blend-mode: multiply;
     background-color: rgba(0, 0, 0, 0.75);
+    position: relative;
+    height: 100%; 
 }
   
   .apresentacao{
@@ -80,3 +82,85 @@
     transition: all .3s;
     filter: invert(0.5);
   }
+
+  .logo-imagens{
+    max-width: 25%; 
+    max-height: 25vh; 
+    width: auto;
+    height: auto;
+    transition: all .3s;
+    filter: invert(0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1; 
+  }
+
+  .dropzone-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    width: 70%; 
+    background-color: transparent;
+    visibility: hidden;
+}
+
+  .dropzone {
+    border: 5px solid black;
+    padding: 20px;
+    background-image: url("../images/camera.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: whitesmoke;
+    background-size: 50%; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+}
+.dropzone:hover {
+    border: 5px solid #e7dd57;
+    padding: 20px;
+    background-image: url("../images/camera.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: transparent rgba(0,0,0, 0.5);
+    background-size: 50%; 
+    filter: invert(1);
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s ease;
+    justify-content: flex-end;
+}
+.dropzone p {
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: -30px; 
+}
+.dropzone:hover p{
+    color: black;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: -30px; 
+}
+
+.button {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  width: 200px;
+  margin-top: 50px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #3498db; 
+  color: #ffffff; 
+  border-radius: 6px;
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}

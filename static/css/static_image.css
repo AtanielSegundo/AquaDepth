@@ -57,7 +57,7 @@ body {
     display: flex;
     flex-direction: column;
     transition: 0.3s ease;
-    justify-content: flex-end; 
+    justify-content: flex-end;
 }
 .dropzone p {
     color: black;
