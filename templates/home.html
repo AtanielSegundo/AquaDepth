@@ -28,7 +28,7 @@
         
         <div class="container">
             <section class="imagens">
-                <div class="dropzone-container">
+                <div class="dropzone-container" id="drop_container">
                     {{ dropzone.create(action="upload_file")}}
                     {{ dropzone.load_js()}}
                     {{dropzone.config()}}

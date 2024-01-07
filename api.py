@@ -57,7 +57,7 @@ def server(**args):
     UPLOADED_PATH="data",
     DROPZONE_MAX_FILE_SIZE = 60 ,
     DROPZONE_TIMEOUT = 5*60*1000,    
-    DROPZONE_DEFAULT_MESSAGE = "<p>Arraste e solte imagens das marcas de calado do navio</p>")
+    DROPZONE_DEFAULT_MESSAGE = "<p>Arraste e solte imagens do calado do navio</p>")
     
     for file in listdir(folder:=api.config["UPLOADED_PATH"]):
         remove(join(folder,file))

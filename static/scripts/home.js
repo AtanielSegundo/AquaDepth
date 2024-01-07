@@ -72,8 +72,8 @@ function handleHoverInversion(sectionName) {
         if (innerImageElement) {
             const isInversed = !(tuple[0] === sectionName);
             innerImageElement.style.filter = isInversed ? "invert(0.5)" : "none";
-            innerImageElement.style.maxHeight = isInversed ? "25vh" : "30vh";
-            innerImageElement.style.maxWidth = isInversed ? "25%" : "30%";
+            innerImageElement.style.maxHeight = isInversed ? "22vh" : "26vh";
+            innerImageElement.style.maxWidth = isInversed ? "22%" : "26%";
         }
     }
 
@@ -132,9 +132,6 @@ function handleButtonClick(clickedId) {
     handleSectionLogos(lastBtn);
 }   
 
-
-
-
 function startProcessing() {
     hideOtherElements(); 
     rotateShip(); 
@@ -150,9 +147,8 @@ function startProcessing() {
         });
 }
 
-
 function hideOtherElements() {
-    const allElements = document.body.children;
+    const allElements = document.getElementById("drop_container").children;
     for (let i = 0; i < allElements.length; i++) {
         const element = allElements[i];
         if (element.tagName !== 'SCRIPT' && !element.classList.contains('blue-rectangle')) {
@@ -162,14 +158,13 @@ function hideOtherElements() {
     const dz_images = document.getElementsByClassName("dz-preview dz-processing dz-success dz-complete dz-image-preview")
     const dzImagesArray = Array.from(dz_images);
     dzImagesArray.forEach(image => {
-    image.parentNode.removeChild(image);
+        image.parentNode.removeChild(image);
     })
 
 }
 
-
 function showOtherElements() {
-    const allElements = document.body.children;
+    const allElements = document.getElementById("drop_container").children;
     for (let i = 0; i < allElements.length; i++) {
         const element = allElements[i];
         if (element.tagName !== 'SCRIPT' && !element.classList.contains('blue-rectangle')) {
@@ -200,31 +195,37 @@ function ImagesProcessing() {
 
 let rotateShipInterval;
 function rotateShip() {
+    const rotate_container = document.getElementById("drop_container");
+
     let dot_repeat = 1;
     const loadingMessage = document.createElement('p');
     loadingMessage.id = 'loading_message';
-    loadingMessage.style.position = 'fixed';
     loadingMessage.textContent = 'Processando' + '.'.repeat(dot_repeat);
-    loadingMessage.style.top = '70%';  
-    loadingMessage.style.left = '50%';
-    loadingMessage.style.fontSize = '30px';
-    loadingMessage.style.transform = 'translateX(-50%)';
-    document.body.appendChild(loadingMessage);
+    loadingMessage.style.color = "white";
+    loadingMessage.style.position = "absolute";
+    loadingMessage.style.top = '80%';  
+    loadingMessage.style.left = '36%';
+    loadingMessage.style.fontSize = '40px';
+    
+    rotate_container.appendChild(loadingMessage);
     
     const shipImage = document.createElement('img');
     shipImage.src = ship_image_path;
+    shipImage.style.position = "absolute"; 
+    shipImage.style.left = '50%'; 
+    shipImage.style.top = '50%'; 
+    shipImage.style.height = '45%'; 
+    shipImage.style.width = '40%';
     shipImage.className = 'ship_image';
-    document.body.appendChild(shipImage);
+    
+    rotate_container.appendChild(shipImage);
     
     let currentRotation = 0;    
     let rotationDirection = 0.4;
     let rotationLimit = 2;
-    let dampingFactor = 0.985;
+    let dampingFactor = 0.99;
     let resetThreshold = 0.1;
     
-    shipImage.style.position = "absolute"; 
-    shipImage.style.top = '50%'; 
-    shipImage.style.left = '50%'; 
     
     rotateShipInterval = setInterval(() => {
         if (currentRotation >= rotationLimit || currentRotation <= -rotationLimit) {
@@ -253,11 +254,12 @@ function rotateShip() {
 function stopRotateShip() {
     clearInterval(rotateShipInterval);
     const shipImage = document.querySelector('.ship_image');
+    
     const loadingMessage = document.getElementById("loading_message");
+    
     if (shipImage && shipImage.parentNode) {
         shipImage.parentNode.removeChild(shipImage);
     }
-
     if (loadingMessage && loadingMessage.parentNode) {
         loadingMessage.parentNode.removeChild(loadingMessage);
     }
